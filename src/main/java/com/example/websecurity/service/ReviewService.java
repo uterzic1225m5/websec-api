@@ -18,9 +18,13 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-
-    public Review getReviewById(Long id) {
-        return reviewRepository.findById(id).orElseThrow(() -> new WebSecMissingDataException("Review with id " + id + " not found"));
+    public Review getReviewById(Long id, Long userId) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new WebSecMissingDataException("Review with id " + id + " not found"));
+        if (review.getUser() == null || !review.getUser().getId().equals(userId)) {
+            throw new WebSecMissingDataException("Review with id " + id + " not found");
+        }
+        return review;
     }
 
     public Review updateReview(Review review) {
