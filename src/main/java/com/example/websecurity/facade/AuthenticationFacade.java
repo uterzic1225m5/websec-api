@@ -27,7 +27,7 @@ public class AuthenticationFacade {
 
     @Transactional
     public AuthenticationResponse authenticate(@NotNull AuthenticationRequest request) {
-        log.info("Authentication Facade: Authenticating user with request: {}", request);
+        log.info("Authentication Facade: Authenticating user with email {}", request.getEmail());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
